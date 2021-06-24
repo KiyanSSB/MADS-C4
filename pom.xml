@@ -4,7 +4,7 @@
     <modelVersion>4.0.0</modelVersion>
 
     <groupId>es.ua.mads</groupId>
-    <artifactId>mads-todolist-inicial</artifactId>
+    <artifactId>MADS-C4</artifactId>
     <version>1.0.0</version>
 
     <parent>
