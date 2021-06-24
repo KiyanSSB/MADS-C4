@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+
+<body>
+<div class="container-fluid">
+  <div class="container-fluid">
+    <h1 th:text="'Por favor, introduce tus nuevos datos'"></h1>
+    <form method="post" th:action="@{/perfil/__${usuario.id}__/editar}" th:object="${usuarioData}">
+      <input class="form-control" type="hidden" th:field="${id}">
+      <div class="col-3">
+        <div class="form-group">
+          <p>
+            <label for="email">Email: </label>
+            <input class="form-control" id="email" name="email" th:field="*{email}" type="text" th:placeholder="${usuario.email}"/>
+          </p>
+          <p>
+            <label for="nombre">Nombre: </label>
+            <input class="form-control" id="nombre" name="nombre" th:field="*{nombre}" type="text" th:placeholder="${usuario.nombre}"/>
+          </p>
+        </div>
+      </div>
+      <button class="btn btn-primary" type="submit">Guardar</button>
+    </form>
+  </div>
+</div>
+
+<div th:replace="fragments::javascript"/>
+
+</body>
+</html>
