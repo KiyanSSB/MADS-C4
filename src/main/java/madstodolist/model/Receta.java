@@ -19,13 +19,10 @@ public class Receta implements Serializable {
     @NotNull
     private String ingredientes;
 
-    @NotNull
     private Integer likes;
 
-    @NotNull
     private Boolean favorita;
 
-    @NotNull
     private Boolean compartida;
 
 
@@ -54,6 +51,7 @@ public class Receta implements Serializable {
         this.likes = 0;
         this.compartida = false;
         this.favorita = false;
+        usuario.getRecetas().add(this);
     }
 
 

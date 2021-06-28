@@ -87,13 +87,20 @@ public class Usuario implements Serializable {
         this.fechaNacimiento = fechaNacimiento;
     }
 
+
+    //Tareas
     public Set<Tarea> getTareas() {
         return tareas;
     }
-
     public void setTareas(Set<Tarea> tareas) {
         this.tareas = tareas;
     }
+
+    //Recetas
+    public Set<Receta> getRecetas() { return  recetas;}
+    public void setRecetas(Set<Receta> recetas){this.recetas = recetas;}
+
+
 
     @Override
     public boolean equals(Object o) {
