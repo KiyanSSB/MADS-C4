@@ -60,6 +60,7 @@ public class RecetaService {
     public Receta findById(Long idReceta){ return recetaRepository.findById(idReceta).orElse(null);}
 
 
+    //Borrar una receta
     @Transactional
     public void borrarReceta(Long idReceta){
         Receta receta = recetaRepository.findById(idReceta).orElse(null);
@@ -69,5 +70,16 @@ public class RecetaService {
 
         }
         recetaRepository.delete(receta);
+    }
+
+    @Transactional
+    public void setFavorito(Long idReceta,Boolean favorito){
+        Receta receta = recetaRepository.findById(idReceta).orElse(null);
+        if (receta == null) {
+            throw new RecetaServiceException("Receta para añadir a favoritos no encontrada");
+        }
+
+        receta.setFavorita(favorito);
+        recetaRepository.save(receta);
     }
 }

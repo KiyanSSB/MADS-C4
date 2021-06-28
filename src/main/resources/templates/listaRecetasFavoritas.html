@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
 
-<head th:replace="fragments :: head (titulo='Login')"></head>
+<head th:replace="fragments :: head (titulo='Lista Recetas favoritas')"></head>
 
 <body>
 <div class="container-fluid">
@@ -22,24 +22,18 @@
         </thead>
         <tbody>
         <tr th:each="receta: ${recetas}">
-          <td th:text="${receta.id}"></td>
-          <td th:text="${receta.nombre}"></td>
-          <td th:text="${receta.ingredientes}"></td>
-          <td th:text="${receta.likes}"></td>
-          <td th:text="${receta.favorita}"></td>
-          <td th:text="${receta.compartida}"></td>
-
-
-          <button class="btn btn-danger btn-xs" onmouseover="" style="cursor: pointer;"
+          <a th:if="${receta.favorita} == true">
+            <td th:text="${receta.id}"></td>
+            <td th:text="${receta.nombre}"></td>
+            <button class="btn btn-danger btn-xs" onmouseover="" style="cursor: pointer;"
                     th:onclick="'del(\'/recetas/' + ${receta.id} + '\')'">Borrar Receta</button>
+            </td>
+
+            <button class="btn btn-light btn-xs" onmouseover="" style="cursor: pointer;"
+                    th:onclick="'quitarfavorita(\'/recetas/' + ${receta.id} + '/quitarfavoritas' + '\')'">Quitar de favoritos</button>
 
 
-          <button th:if="${receta.favorita == false}" class="btn btn-light btn-xs" onmouseover="" style="cursor: pointer;"
-                  th:onclick="'favorita(\'/recetas/' + ${receta.id} + '/favoritas' + '\')'">Añadir a favoritos</button>
-
-
-
-          </td>
+          </a>
         </tr>
         </tbody>
       </table>
@@ -48,7 +42,7 @@
     </div>
   </div>
 
-  <!-- Alerta -->
+
   <div class="row mt-2">
     <div class="col">
       <div class="alert alert-success alert-dismissible fade show" role="alert" th:if="${!#strings.isEmpty(mensaje)}">
@@ -67,29 +61,25 @@
 <div th:replace="fragments::javascript"/>
 
 <!-- Lanzamos una petición DELETE por JavaScript para borrar una tarea -->
+
 <script type="text/javascript">
   function del(urlBorrar) {
-    console.log(urlBorrar)
-    if (confirm('¿Estás seguro/a de que quieres BORRAR la tarea?')) {
+    if (confirm('¿Estás seguro/a de que quieres borrar la tarea?')) {
       fetch(urlBorrar, {
         method: 'DELETE'
       }).then((res) => location.reload());
     }
   }
 
-  function favorita(urlFavorita) {
-    console.log(urlFavorita)
-    if (confirm('¿Estás seguro que quieres añadir esta receta a favoritas?')) {
-      fetch(urlFavorita, {
+  function quitarfavorita(urlBorrar) {
+    if (confirm('¿Estás seguro/a de que quieres ELIMINAR la receta de FAVORITOS?')) {
+      fetch(urlBorrar, {
         method: 'POST'
       }).then((res) => location.reload());
     }
   }
-</script>
 
-<script>
 
 </script>
-
 
 </body>

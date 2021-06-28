@@ -12,6 +12,7 @@ import madstodolist.service.RecetaService;
 import madstodolist.service.TareaService;
 import madstodolist.service.UsuarioService;
 import madstodolist.service.UsuarioServiceException;
+import org.apache.tomcat.util.http.parser.HttpParser;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -90,6 +91,60 @@ public class RecetaController {
         return "redirect:/usuarios/" + idUsuario + "/recetas";
     }
 
+
+    ///////////////////////////////////////////////////////////////////////////////////////////////////
+    ///////////////////////////////////////////////////////////////////////////////////////////////////
+    ///////////////////////////////////////////////////////////////////////////////////////////////////
+    ///////////////////                          FAVORITOS                     ////////////////////////
+    ///////////////////////////////////////////////////////////////////////////////////////////////////
+    ///////////////////////////////////////////////////////////////////////////////////////////////////
+    ///////////////////////////////////////////////////////////////////////////////////////////////////
+
+    //Listado de todas las recetas FAVORITAS
+    //Listado de todas las Recetas
+    @GetMapping("/usuarios/{id}/recetas/favoritas")
+    public String listadoRecetasFavoritas(@PathVariable(value = "id") Long idUsuario,
+                                 Model model,
+                                 HttpSession session){
+
+        //Comprobamos que el usuario que accede a esta dirección es el registrado
+        managerUserSession.comprobarUsuarioLogeado(session,idUsuario);
+        Usuario usuario = usuarioService.findById(idUsuario);
+        if(usuario == null){
+            throw  new UsuarioNotFoundException();
+        }
+
+        List<Receta> recetas = recetaService.allRecetasUsuario(idUsuario);
+        model.addAttribute("usuario" , usuario);
+        model.addAttribute("recetas" , recetas);
+        return "listaRecetasFavoritas";
+    }
+
+    //Añade una receta a FAVORITAs
+    @PostMapping("/recetas/{id}/favoritas")
+    @ResponseBody
+    public String recetaFavorita(@PathVariable(value = "id") Long idReceta){
+        Receta receta = recetaService.findById(idReceta);
+        if(receta == null){
+            throw new RecetaNotFoundException();
+        }
+        recetaService.setFavorito(idReceta,true);
+        return "";
+    }
+
+    //Elimina una receta a FAVORITAs
+    @PostMapping("/recetas/{id}/quitarfavoritas")
+    @ResponseBody
+    public String QuitarrecetaFavorita(@PathVariable(value = "id") Long idReceta){
+        Receta receta = recetaService.findById(idReceta);
+        if(receta == null){
+            throw new RecetaNotFoundException();
+        }
+        recetaService.setFavorito(idReceta,false);
+        return "";
+    }
+
+
     //Borrar una receta
     @DeleteMapping("/recetas/{id}")
     @ResponseBody
@@ -105,4 +160,5 @@ public class RecetaController {
         recetaService.borrarReceta(idReceta);
         return "";
     }
+
 }
