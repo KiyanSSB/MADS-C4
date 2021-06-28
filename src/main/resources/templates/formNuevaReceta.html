@@ -23,6 +23,12 @@
         <input class="form-control" id="ingredientes" name="ingredientes" required th:field="*{ingredientes}" type="text"/>
       </div>
 
+      //Favorita
+      <div class="form-group form-row">
+        <label for="favorita">Favorita</label>
+        <input id="favorita" class="form-check-inline" name="favorita" type="checkbox" th:field="*{favorita}"/>
+      </div>
+
       <button class="btn btn-primary" type="submit">Crear receta</button>
       <a class="btn btn-link" th:href="@{/usuarios/{id}/recetas(id=${usuario.id})}">Cancelar</a>
     </div>

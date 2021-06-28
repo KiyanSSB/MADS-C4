@@ -11,4 +11,9 @@ public class RecetaData {
     public String getIngredientes() { return ingredientes;};
     public void setIngredientes(String ingredientes) { this.ingredientes = ingredientes;};
 
+    //Favorita
+    public Boolean favorita;
+    public Boolean getFavorita() { return favorita;};
+    public void setFavorita(Boolean favorita) { this.favorita = favorita;};
+
 }
