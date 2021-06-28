@@ -1,8 +1,6 @@
-package madstodolist;
+package madstodolist.service;
 
 import madstodolist.model.Usuario;
-import madstodolist.service.UsuarioService;
-import madstodolist.service.UsuarioServiceException;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.slf4j.Logger;
