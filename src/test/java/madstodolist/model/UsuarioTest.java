@@ -139,8 +139,17 @@ public class UsuarioTest {
     @Test
     public void crearUsuarioAdmin() throws Exception{
         //GIVEN (Dado los datos siguientes ...)
+        Usuario usuario = new Usuario("admin.com");
+        usuario.setNombre("admin");
+        usuario.setPassword("admin");
+        usuario.setAdmin(true);
 
         //WHEN
+        usuarioRepository.save(usuario);
+
         //THEN
+        assertThat(usuario.getId()).isNotNull();
+        assertThat(usuario.getEmail()).isEqualTo("admin.com");
+        assertThat(usuario.getAdmin()).isEqualTo(true);
     }
 }
