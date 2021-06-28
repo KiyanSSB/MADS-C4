@@ -21,11 +21,6 @@
     <!-- Tareas -->
     <div class="collapse navbar-collapse" id="navbarText">
         <ul class="navbar-nav">
-            <!-- Tareas -->
-            <li th:if="${usuario} ? ${usuario} != '' : false" class="nav-item"
-                th:class="${titulo} == 'Tareas' ? 'active' : ''">
-                <a class="nav-link" th:href="'/usuarios/'+${id}+'/tareas'">Tareas</a><span class="sr-only" th:if="${titulo == 'Tareas'}">(current)</span></a>
-            </li>
 
             <!-- Recetas -->
             <li th:if="${usuario} ? ${usuario} != '' : false" class="nav-item"
