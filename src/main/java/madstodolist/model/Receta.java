@@ -108,4 +108,11 @@ public class Receta implements Serializable {
     public void setCompartida(Boolean compartida) {
         this.compartida = compartida;
     }
+
+
+    //Usuario
+    public Usuario getUsuario(){
+        return usuario;
+    }
+
 }

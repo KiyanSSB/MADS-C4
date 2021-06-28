@@ -2,6 +2,7 @@ package madstodolist.controller;
 
 
 import madstodolist.authentication.ManagerUserSession;
+import madstodolist.controller.exception.RecetaNotFoundException;
 import madstodolist.controller.exception.TareaNotFoundException;
 import madstodolist.controller.exception.UsuarioNotFoundException;
 import madstodolist.model.Tarea;
@@ -96,7 +97,12 @@ public class RecetaController {
                                 RedirectAttributes flash, HttpSession session){
         Receta receta = recetaService.findById(idReceta);
         if(receta == null){
-            throw  new RecetaNotFoundException();
+            throw new RecetaNotFoundException();
         }
+
+        managerUserSession.comprobarUsuarioLogeado(session, receta.getUsuario().getId());
+
+        recetaService.borrarReceta(idReceta);
+        return "";
     }
 }

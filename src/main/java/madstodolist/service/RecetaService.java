@@ -54,4 +54,20 @@ public class RecetaService {
         recetaRepository.save(receta);
         return receta;
     }
+
+    //Encontrar una receta por id
+    @Transactional
+    public Receta findById(Long idReceta){ return recetaRepository.findById(idReceta).orElse(null);}
+
+
+    @Transactional
+    public void borrarReceta(Long idReceta){
+        Receta receta = recetaRepository.findById(idReceta).orElse(null);
+
+        if(receta == null ){
+            throw new RecetaServiceException("Receta para borrar no encontrada");
+
+        }
+        recetaRepository.delete(receta);
+    }
 }
