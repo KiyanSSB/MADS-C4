@@ -17,6 +17,7 @@
                     <li th:text="'Nombre: ' + ${usuario.nombre}"></li>
                     <li th:text="'Email: ' + ${usuario.email}"></li>
                     <li th:text="'Fecha de nacimiento: ' + ${usuario.fechaNacimiento}"></li>
+                    <li th:text="'Administrador:' + ${usuario.getAdmin()}"></li>
                 </ul>
 
                 <!-- Botón de modificar perfil, solo visible si el usuario logueado coincide con el ID que tenemos en la página-->
