@@ -8,7 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.util.Optional;
+import java.util.*;
 
 @Service
 public class UsuarioService {
@@ -59,5 +59,25 @@ public class UsuarioService {
     @Transactional(readOnly = true)
     public Usuario findById(Long usuarioId) {
         return usuarioRepository.findById(usuarioId).orElse(null);
+    }
+
+
+    @Transactional
+    public Usuario modificarUsuario(Long id, String email , String nombre){
+
+        //Cogemos el usuario por el id
+        Usuario modificarUsuario = usuarioRepository.findById(id).orElse(null);
+
+        //Comprobamos que existe
+        if (modificarUsuario == null) throw new UsuarioServiceException("El usuario que se intenta modificar no existe");
+
+        //Si existe el usuario y no se produce ningún error, modificamos los valores
+        modificarUsuario.setEmail(email);
+        modificarUsuario.setNombre(nombre);
+
+
+        //Guardamos el usuario en la base de datos
+        usuarioRepository.save(modificarUsuario);
+        return modificarUsuario;
     }
 }

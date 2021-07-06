@@ -1,9 +1,5 @@
-package madstodolist;
+package madstodolist.model;
 
-import madstodolist.model.Usuario;
-import madstodolist.model.UsuarioRepository;
-import madstodolist.service.UsuarioService;
-import madstodolist.service.UsuarioServiceException;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.slf4j.Logger;
@@ -131,5 +127,29 @@ public class UsuarioTest {
         // THEN
         assertThat(usuario1).isEqualTo(usuario2);
         assertThat(usuario1).isNotEqualTo(usuario3);
+    }
+
+
+    /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+    /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+    /////////////////////////////////////////// PRUEBAS DEL MODELO DE ADMIN /////////////////////////////////////////////
+    /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+    /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+    @Test
+    public void crearUsuarioAdmin() throws Exception{
+        //GIVEN (Dado los datos siguientes ...)
+        Usuario usuario = new Usuario("admin.com");
+        usuario.setNombre("admin");
+        usuario.setPassword("admin");
+        usuario.setAdmin(true);
+
+        //WHEN
+        usuarioRepository.save(usuario);
+
+        //THEN
+        assertThat(usuario.getId()).isNotNull();
+        assertThat(usuario.getEmail()).isEqualTo("admin.com");
+        assertThat(usuario.getAdmin()).isEqualTo(true);
     }
 }

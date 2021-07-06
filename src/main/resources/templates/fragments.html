@@ -14,4 +14,41 @@
     <span th:text="${scripts}"></span>
 </div>
 
+<nav th:fragment="navbar" class="navbar navbar-expand-lg navbar-light  mb-5 flex-row" style="background-color: #f5c6cb">
+    <!-- To do list -->
+    <a class="navbar-brand font-italic font-weight-bolder" href="/about" th:text="ToDoList"></a>
+
+    <!-- Tareas -->
+    <div class="collapse navbar-collapse" id="navbarText">
+        <ul class="navbar-nav">
+
+            <!-- Recetas -->
+            <li th:if="${usuario} ? ${usuario} != '' : false" class="nav-item"
+                th:class="${titulo} == 'Recetas' ? 'active' : ''">
+                <a class="nav-link" th:href="@{/usuarios/__${usuario.id}__/recetas}">Recetas</a><span class="sr-only"
+                                                                          th:if="${titulo == 'Equipos'}">(current)</a>
+            </li>
+
+            <!-- Recetas Favoritas -->
+            <li th:if="${usuario} ? ${usuario} != '' : false" class="nav-item"
+                th:class="${titulo} == 'Recetas Favoritas' ? 'active' : ''">
+                <a class="nav-link" th:href="@{/usuarios/__${usuario.id}__/recetas/favoritas}">Recetas Favoritas</a>
+                <span class="sr-only" th:if="${titulo == 'Recetas Favoritas'}">(current)</a>
+            </li>
+        </ul>
+    </div>
+
+    <!-- Si tenemos una variable usuario que no está vacía, mostramos el dropdown con el nombre, si no, no mostramos el dropdown -->
+    <span class="mr-4 pl-5 nav-item dropdown" th:if="${usuario} ? ${usuario} != '' : false">
+        <a class="navbar-text font-weight-bold text-white dropdown-toggle mr-3" id="navbarDropdownMenuLink"
+           th:text="${usuario.nombre}" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"/>
+            <div class="mt-3 dropdown-menu border-primary ml-n5" aria-labelledby="navbarDropdownMenuLink">
+                <a class="dropdown-item text-primary" th:href="@{/perfil/__${usuario.id}__}">Ver mi perfil</a>
+                <a class="dropdown-item text-primary" href="/logout" th:text="'Cerrar sesión ' + ${usuario.nombre}"></a>
+
+            </div>
+    </span>
+</nav>
+
+
 /html>

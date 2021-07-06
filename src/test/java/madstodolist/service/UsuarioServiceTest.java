@@ -1,8 +1,6 @@
-package madstodolist;
+package madstodolist.service;
 
 import madstodolist.model.Usuario;
-import madstodolist.service.UsuarioService;
-import madstodolist.service.UsuarioServiceException;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.slf4j.Logger;
@@ -112,5 +110,21 @@ public class UsuarioServiceTest {
         // THEN
 
         assertThat(usuario.getId()).isEqualTo(1L);
+    }
+
+    @Test
+    @Transactional
+    public void servicioRegistroUsuarioAdmin(){
+        Usuario usuario = new Usuario("prueba@gmail.com");
+        usuario.setPassword("123456");
+        usuario.setAdmin(true);
+
+        //When
+
+        usuario = usuarioService.registrar(usuario);
+
+        //Then
+
+        assertThat(usuario.getAdmin()).isTrue();
     }
 }

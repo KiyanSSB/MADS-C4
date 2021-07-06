@@ -24,6 +24,7 @@ public class Usuario implements Serializable {
     @Column(name = "fecha_nacimiento")
     @Temporal(TemporalType.DATE)
     private Date fechaNacimiento;
+    private Boolean admin;
 
     // Definimos el tipo de fetch como EAGER para que
     // cualquier consulta que devuelve un usuario rellene automáticamente
@@ -32,6 +33,9 @@ public class Usuario implements Serializable {
     // que la relación pueda traer a memoria una gran cantidad de entidades
     @OneToMany(mappedBy = "usuario", fetch = FetchType.EAGER)
     Set<Tarea> tareas = new HashSet<>();
+
+    @OneToMany(mappedBy = "usuario" , fetch =  FetchType.EAGER)
+    Set<Receta> recetas = new HashSet<>();
 
     // Constructor vacío necesario para JPA/Hibernate.
     // Lo hacemos privado para que no se pueda usar desde el código de la aplicación. Para crear un
@@ -84,12 +88,25 @@ public class Usuario implements Serializable {
         this.fechaNacimiento = fechaNacimiento;
     }
 
+
+    //Tareas
     public Set<Tarea> getTareas() {
         return tareas;
     }
-
     public void setTareas(Set<Tarea> tareas) {
         this.tareas = tareas;
+    }
+
+    //Recetas
+    public Set<Receta> getRecetas() { return  recetas;}
+    public void setRecetas(Set<Receta> recetas){this.recetas = recetas;}
+
+    //Admin
+    public Boolean getAdmin() {
+        return admin;
+    }
+    public void setAdmin(Boolean admin) {
+        this.admin = admin;
     }
 
     @Override
