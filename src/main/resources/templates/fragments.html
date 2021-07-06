@@ -35,6 +35,15 @@
                 <a class="nav-link" th:href="@{/usuarios/__${usuario.id}__/recetas/favoritas}">Recetas Favoritas</a>
                 <span class="sr-only" th:if="${titulo == 'Recetas Favoritas'}">(current)</a>
             </li>
+
+            <!-- Listado de usuarios -->
+            <li  class="nav-item"
+                th:class="${titulo} == 'Listado Usuarios' ? 'active' : ''">
+                <a class="nav-link" th:href="@{/usuarios}">Listado Usuarios</a>
+                <span class="sr-only" th:if="${titulo == 'Listado Usuarios'}">(current)</a>
+            </li>
+
+
         </ul>
     </div>
 
