@@ -111,4 +111,20 @@ public class UsuarioServiceTest {
 
         assertThat(usuario.getId()).isEqualTo(1L);
     }
+
+    @Test
+    @Transactional
+    public void servicioRegistroUsuarioAdmin(){
+        Usuario usuario = new Usuario("prueba@gmail.com");
+        usuario.setPassword("123456");
+        usuario.setAdmin(true);
+
+        //When
+
+        usuario = usuarioService.registrar(usuario);
+
+        //Then
+
+        assertThat(usuario.getAdmin()).isTrue();
+    }
 }
