@@ -1,4 +1,4 @@
-package madstodolist;
+package madstodolist.aplicacion;
 
 import madstodolist.authentication.ManagerUserSession;
 import madstodolist.model.Tarea;

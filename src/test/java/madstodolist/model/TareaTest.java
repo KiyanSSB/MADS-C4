@@ -1,4 +1,4 @@
-package madstodolist;
+package madstodolist.model;
 
 
 import madstodolist.model.Tarea;
