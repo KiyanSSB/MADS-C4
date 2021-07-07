@@ -56,8 +56,9 @@ public class RecetaServiceTest {
 
         Receta compartida = recetaService.findById(1L);
         assertThat(compartida.getCompartida()).isTrue();
-
     }
+
+
 
 
 }
