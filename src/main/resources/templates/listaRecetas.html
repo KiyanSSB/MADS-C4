@@ -50,6 +50,15 @@
                             Compartidas
                         </button>
                     </td>
+
+                    <td>
+                        <a th:href="@{/recetas/{id}/modificar(id=${receta.id})}">
+                            <button class="btn btn-light btn-xs" onmouseover="" style="cursor: pointer;"
+                                    th:href="@{'/recetas/' + ${receta.id} + '/modificar' + '\')'}">
+                                Modificar Receta
+                            </button>
+                        </a>
+                    </td>
                 </tr>
                 </tbody>
             </table>
@@ -107,7 +116,6 @@
         }
     }
 </script>
-
 
 
 </body>
