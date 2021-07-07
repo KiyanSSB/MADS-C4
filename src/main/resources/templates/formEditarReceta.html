@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head th:replace="fragments :: head (titulo='Editar Receta')"></head>
+
+<body>
+<div th:replace="fragments :: navbar" ></div>
+
+
+<div style=" display: flex;  justify-content: center ; align-items: center">
+    <div class="card" style="width: 18rem;" >
+        <div class="container-fluid">
+            <h2 th:text="'Modificación de la Receta ' + ${receta.getId()}"></h2>
+
+            <form method="post" th:action="@{/recetas/{id}/modificar(id=${receta.id})}" th:object="${recetaData}">
+                <div class="col-6">
+                    <div class="form-group">
+                        <label for="nombre">Nombre de la Receta:</label>
+                        <input class="form-control" id="nombre" name="nombre" required th:field="*{nombre}"
+                               type="string"/>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="ingredientes">Ingredientes de la Receta:</label>
+                        <input class="form-control" id="ingredientes" name="ingredientes" required
+                               th:field="*{ingredientes}" type="string"/>
+                    </div>
+
+                    <button class="btn btn-primary" type="submit">Modificar tarea</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+<div th:replace="fragments::javascript"/>
+
+</body>
+</html>
