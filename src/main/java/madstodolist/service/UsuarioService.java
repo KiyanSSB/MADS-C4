@@ -8,6 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import javax.servlet.http.HttpSession;
 import java.util.*;
 
 @Service
@@ -62,6 +63,7 @@ public class UsuarioService {
     }
 
 
+
     @Transactional
     public Usuario modificarUsuario(Long id, String email , String nombre){
 
@@ -79,5 +81,9 @@ public class UsuarioService {
         //Guardamos el usuario en la base de datos
         usuarioRepository.save(modificarUsuario);
         return modificarUsuario;
+    }
+
+    public Iterable<Usuario> getAllUsers(){
+        return  usuarioRepository.findAll();
     }
 }

@@ -161,4 +161,28 @@ public class RecetaController {
         return "";
     }
 
+
+    //Listar recetas compartidas de un usuario buscado
+    @GetMapping("/buscar/{id}/compartidas")
+    public String listarRecetasCompartidas(@PathVariable (value = "id") Long idUsuario,
+                                           Model model, HttpSession session){
+
+        Usuario usuario =  usuarioService.findById(idUsuario);
+        model.addAttribute("usuario", usuario);
+
+        return "listaRecetasCompartidas";
+    }
+
+
+    ///Añadir una receta a compartidas
+    @PostMapping("/recetas/{id}/compartidas")
+    @ResponseBody
+    public String recetaCompartida(@PathVariable(value = "id") Long idReceta){
+        Receta receta = recetaService.findById(idReceta);
+        if(receta == null){
+            throw new RecetaNotFoundException();
+        }
+        recetaService.setCompartida(idReceta,true);
+        return "";
+    }
 }

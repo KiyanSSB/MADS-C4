@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+
+<head th:replace="fragments :: head (titulo='Usuarios')"></head>
+
+<div th:replace="fragments :: navbar"></div>
+
+<div th:each="receta: ${usuario.getRecetas()}" style=" display: flex;  justify-content: center ; align-items: center">
+    <div th:if="${receta.getCompartida() != false}" class="card" style="width: 18rem;">
+        <div  class="container-fluid">
+            <h1 th:text="${receta.getNombre()}"></h1>
+            <ul>
+                <li th:text="'Nombre: ' + ${receta.getNombre()}"></li>
+                <li th:text="'Ingredientes: ' + ${receta.getIngredientes()}"></li>
+                <li th:text="'Likes: ' + ${receta.getLikes()}"></li>
+            </ul>
+        </div>
+    </div>
+</div>
+<div th:replace="fragments::javascript"/>
+
+
+<body>
+
+</body>
+</html>
