@@ -94,4 +94,5 @@ public class RecetaService {
         receta.setCompartida(compartida);
         recetaRepository.save(receta);
     }
+
 }

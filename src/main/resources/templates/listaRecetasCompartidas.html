@@ -4,24 +4,52 @@
 
 <head th:replace="fragments :: head (titulo='Usuarios')"></head>
 
-<div th:replace="fragments :: navbar"></div>
 
-<div th:each="receta: ${usuario.getRecetas()}" style=" display: flex;  justify-content: center ; align-items: center">
-    <div th:if="${receta.getCompartida() != false}" class="card" style="width: 18rem;">
-        <div  class="container-fluid">
+<body>
+<div th:replace="fragments :: navbar"></div>
+<div style=" display: flex;  justify-content: center ; align-items: center" th:each="receta: ${usuario.getRecetas()}">
+    <div class="card" style="width: 18rem;" th:if="${receta.getCompartida() != false}">
+        <div class="container-fluid">
             <h1 th:text="${receta.getNombre()}"></h1>
             <ul>
                 <li th:text="'Nombre: ' + ${receta.getNombre()}"></li>
                 <li th:text="'Ingredientes: ' + ${receta.getIngredientes()}"></li>
                 <li th:text="'Likes: ' + ${receta.getLikes()}"></li>
             </ul>
+
+            <a th:href="'copiar/' + ${receta.getId()}">
+                <button class="btn btn-danger btn-xs" onmouseover="" style="cursor: pointer;"
+                >Visitar Perfil
+                </button>
+            </a>
+
+
+            <button class="btn btn-light btn-xs" onmouseover="" style="cursor: pointer;"
+                        th:onclick="'copiar(\'/copiar/' + ${receta.id} + '\')'">
+                Guardar Receta
+            </button>
+
+
+
+
         </div>
     </div>
 </div>
 <div th:replace="fragments::javascript"/>
-
-
-<body>
-
 </body>
+
+
+<script type="text/javascript">
+    function copiar(urlCopiar) {
+        console.log(urlCopiar)
+        if (confirm('¿Estás seguro/a de que quieres guardar la Receta?')) {
+            fetch(urlCopiar, {
+                method: 'POST'
+            }).then((res) => location.reload());
+        }
+    }
+
+</script>
+
+
 </html>
