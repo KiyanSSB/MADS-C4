@@ -185,4 +185,20 @@ public class RecetaController {
         recetaService.setCompartida(idReceta,true);
         return "";
     }
+
+
+    //
+    @PostMapping("/copiar/{id}")
+    @ResponseBody
+    public void recetaCopiada(@PathVariable(value = "id") Long idReceta, HttpSession session){
+        Receta receta = recetaService.findById(idReceta);
+        if (receta == null){
+            throw new RecetaNotFoundException();
+        }
+
+        Long id = managerUserSession.usuarioLogeado(session);
+        managerUserSession.comprobarUsuarioLogeado(session,id);
+
+        recetaService.nuevaRecetaUsuario(id,receta.getNombre(),receta.getIngredientes());
+    }
 }
