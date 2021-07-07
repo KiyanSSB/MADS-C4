@@ -1,7 +1,9 @@
 package madstodolist.controller;
 
 
+
 import madstodolist.authentication.ManagerUserSession;
+import madstodolist.controller.exception.UsuarioNotFoundException;
 import madstodolist.model.Usuario;
 import madstodolist.service.UsuarioService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -36,6 +38,21 @@ public class ListadoUsuariosController {
         model.addAttribute("usuario" , usuario);
 
         return "listaUsuarios";
+    }
+
+
+    @GetMapping("/buscar/{id}")
+    public String verPerfilBuscado(Model model, HttpSession session, @PathVariable(value="id") Long idUsuario){
+
+        Usuario usuario = usuarioService.findById(idUsuario);
+        if (usuario == null) {
+            throw new UsuarioNotFoundException();
+        }
+
+        model.addAttribute("usuario" , usuario);
+
+
+        return "perfilBuscado";
     }
 
 
