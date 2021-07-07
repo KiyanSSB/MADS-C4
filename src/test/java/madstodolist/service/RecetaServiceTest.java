@@ -62,9 +62,8 @@ public class RecetaServiceTest {
     @Transactional
     public void testDarLike(){
         Receta receta = recetaService.nuevaRecetaUsuario(1L, "test" , "test");
-        recetaService.darLike(1L);
         assertThat(receta.getLikes()).isEqualTo(0);
-        receta.sumarLike();
+        recetaService.darLike(receta.getId());
         assertThat(receta.getLikes()).isEqualTo(1);
     }
 

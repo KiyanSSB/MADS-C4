@@ -40,7 +40,6 @@ public class RecetaTest {
 
         // WHEN
 
-        Tarea tarea = new Tarea(usuario, "Práctica 1 de MADS");
         Receta receta = new Receta(usuario,"prueba" , "prueba");
 
         receta.setCompartida(true);
@@ -49,6 +48,17 @@ public class RecetaTest {
         assertThat(receta.getCompartida()).isTrue();
 
 
+    }
+
+    @Test
+    public void darLikeReceta() throws Exception {
+        // GIVEN
+        Usuario usuario = new Usuario("juan.gutierrez@gmail.com");
+        // WHEN
+        Receta receta = new Receta(usuario,"prueba" , "prueba");
+        receta.sumarLike();
+        // THEN
+        assertThat(receta.getLikes()).isEqualTo(1);
     }
 
 }
