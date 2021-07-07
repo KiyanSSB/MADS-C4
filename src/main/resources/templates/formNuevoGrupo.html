@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head th:replace="fragments :: head (titulo='Crear grupo')">
+
+<body>
+<div>
+    <div th:replace="fragments :: navbar"></div>
+
+    <div class="row justify-content-center mt-5 pt-5">
+        <h2 >Introduce el nombre del nuevo equipo</h2>
+    </div>
+
+    <div class="row justify-content-center mt-3 pt-3">
+        <div class="col-3">
+            <form method="post" action="/grupos/crear" th:object="${grupoData}">
+                <div class="form-group form-row">
+                    <label for="nombre">Nombre del Grupo:</label>
+                    <input class="form-control" id="nombre" name="nombre" required th:field="*{nombre}" type="string"/>
+                </div>
+                <button class="btn btn-primary" type="submit">Crear equipo</button>
+                <a class="btn btn-link" href="/equipos/">Cancelar</a>
+            </form>
+        </div>
+    </div>
+
+
+</div>
+</body>
+</html>

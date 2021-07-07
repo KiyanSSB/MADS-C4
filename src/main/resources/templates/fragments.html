@@ -43,6 +43,13 @@
                 <span class="sr-only" th:if="${titulo == 'Listado Usuarios'}">(current)</a>
             </li>
 
+            <!-- Listado de usuarios -->
+            <li  class="nav-item"
+                 th:class="${titulo} == 'Grupos' ? 'active' : ''">
+                <a class="nav-link" th:href="@{/grupos}">Listado Grupos</a>
+                <span class="sr-only" th:if="${titulo == 'Grupos'}">(current)</a>
+            </li>
+
 
         </ul>
     </div>
