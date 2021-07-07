@@ -29,6 +29,12 @@
                 Guardar Receta
             </button>
 
+            <button class="btn btn-light btn-xs" onmouseover="" style="cursor: pointer;"
+                    th:onclick="'like(\'/like/' + ${receta.id} + '\')'">
+                Dar Like
+            </button>
+
+
 
 
 
@@ -43,6 +49,15 @@
     function copiar(urlCopiar) {
         console.log(urlCopiar)
         if (confirm('¿Estás seguro/a de que quieres guardar la Receta?')) {
+            fetch(urlCopiar, {
+                method: 'POST'
+            }).then((res) => location.reload());
+        }
+    }
+
+    function like(urlCopiar) {
+        console.log(urlCopiar)
+        if (confirm('¿Estás seguro/a de que quieres dar Like a la Receta?')) {
             fetch(urlCopiar, {
                 method: 'POST'
             }).then((res) => location.reload());

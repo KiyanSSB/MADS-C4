@@ -187,7 +187,7 @@ public class RecetaController {
     }
 
 
-    //
+    //Copiar una receta de un usuario
     @PostMapping("/copiar/{id}")
     @ResponseBody
     public void recetaCopiada(@PathVariable(value = "id") Long idReceta, HttpSession session){
@@ -200,5 +200,19 @@ public class RecetaController {
         managerUserSession.comprobarUsuarioLogeado(session,id);
 
         recetaService.nuevaRecetaUsuario(id,receta.getNombre(),receta.getIngredientes());
+    }
+
+    @PostMapping("/like/{id}")
+    @ResponseBody
+    public void darLike(@PathVariable(value = "id") Long idReceta, HttpSession session){
+        Receta receta = recetaService.findById(idReceta);
+        if (receta == null){
+            throw new RecetaNotFoundException();
+        }
+
+        Long id = managerUserSession.usuarioLogeado(session);
+        managerUserSession.comprobarUsuarioLogeado(session,id);
+
+        recetaService.darLike(idReceta);
     }
 }
