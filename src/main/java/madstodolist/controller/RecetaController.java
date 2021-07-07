@@ -161,4 +161,15 @@ public class RecetaController {
         return "";
     }
 
+
+    //Listar recetas compartidas de un usuario buscado
+    @GetMapping("/buscar/{id}/compartidas")
+    public String listarRecetasCompartidas(@PathVariable (value = "id") Long idUsuario,
+                                           Model model, HttpSession session){
+
+        Usuario usuario =  usuarioService.findById(idUsuario);
+        model.addAttribute("usuario", usuario);
+
+        return "listaRecetasCompartidas";
+    }
 }

@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+
+<head th:replace="fragments :: head (titulo='Usuarios')"></head>
+
+<div th:replace="fragments :: navbar"></div>
+
+
+<body>
+
+<div style=" display: flex;  justify-content: center ; align-items: center">
+    <div class="card" style="width: 18rem;">
+        <div class="container-fluid">
+            <div class="container-fluid">
+                <h1 th:text="'Perfil de ' + ${usuario.nombre}"></h1>
+                <ul>
+                    <li th:text="'ID: ' + ${usuario.id}"></li>
+                    <li th:text="'Nombre: ' + ${usuario.nombre}"></li>
+                    <li th:text="'Email: ' + ${usuario.email}"></li>
+                    <li th:text="'Fecha de nacimiento: ' + ${usuario.fechaNacimiento}"></li>
+                    <li th:text="'Administrador:' + ${usuario.getAdmin()}"></li>
+                </ul>
+
+                <!-- Botón de modificar perfil, solo visible si el usuario logueado coincide con el ID que tenemos en la página-->
+                <a class="btn btn-primary btn-xs" th:href="@{/perfil/__${usuario.id}__/editar}"/>Modificar perfil</a>
+            </div>
+        </div>
+    </div>
+
+    <div class="card" >
+        <div class="container-fluid">
+            <a th:href="'/buscar/' + ${usuario.id} + '/compartidas'">
+                <button class="btn-light" style="cursor:pointer">
+                    Ver recetas compartidas
+                </button>
+            </a>
+        </div>
+    </div>
+</div>
+
+
+
+
+
+
+
+
+<div th:replace="fragments::javascript"/>
+</body>
+</html>
