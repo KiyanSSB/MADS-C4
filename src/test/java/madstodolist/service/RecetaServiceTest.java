@@ -58,6 +58,15 @@ public class RecetaServiceTest {
         assertThat(compartida.getCompartida()).isTrue();
     }
 
+    @Test
+    @Transactional
+    public void testDarLike(){
+        Receta receta = recetaService.nuevaRecetaUsuario(1L, "test" , "test");
+        recetaService.darLike(1L);
+        assertThat(receta.getLikes()).isEqualTo(0);
+        receta.sumarLike();
+        assertThat(receta.getLikes()).isEqualTo(1);
+    }
 
 
 
