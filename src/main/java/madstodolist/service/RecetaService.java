@@ -82,4 +82,16 @@ public class RecetaService {
         receta.setFavorita(favorito);
         recetaRepository.save(receta);
     }
+
+
+    @Transactional
+    public void setCompartida(Long idReceta,Boolean compartida){
+        Receta receta = recetaRepository.findById(idReceta).orElse(null);
+        if (receta == null) {
+            throw new RecetaServiceException("Receta para añadir a compartidas no encontrada");
+        }
+
+        receta.setCompartida(compartida);
+        recetaRepository.save(receta);
+    }
 }

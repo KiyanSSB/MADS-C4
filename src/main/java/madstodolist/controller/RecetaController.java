@@ -172,4 +172,17 @@ public class RecetaController {
 
         return "listaRecetasCompartidas";
     }
+
+
+    ///Añadir una receta a compartidas
+    @PostMapping("/recetas/{id}/compartidas")
+    @ResponseBody
+    public String recetaCompartida(@PathVariable(value = "id") Long idReceta){
+        Receta receta = recetaService.findById(idReceta);
+        if(receta == null){
+            throw new RecetaNotFoundException();
+        }
+        recetaService.setCompartida(idReceta,true);
+        return "";
+    }
 }
