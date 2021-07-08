@@ -1,6 +1,7 @@
 package madstodolist.controller;
 
 
+
 import madstodolist.authentication.ManagerUserSession;
 import madstodolist.controller.exception.RecetaNotFoundException;
 import madstodolist.controller.exception.TareaNotFoundException;
@@ -145,6 +146,8 @@ public class RecetaController {
     }
 
 
+
+
     //Borrar una receta
     @DeleteMapping("/recetas/{id}")
     @ResponseBody
@@ -184,5 +187,74 @@ public class RecetaController {
         }
         recetaService.setCompartida(idReceta,true);
         return "";
+    }
+
+
+    //Copiar una receta de un usuario
+    @PostMapping("/copiar/{id}")
+    @ResponseBody
+    public void recetaCopiada(@PathVariable(value = "id") Long idReceta, HttpSession session){
+        Receta receta = recetaService.findById(idReceta);
+        if (receta == null){
+            throw new RecetaNotFoundException();
+        }
+
+        Long id = managerUserSession.usuarioLogeado(session);
+        managerUserSession.comprobarUsuarioLogeado(session,id);
+
+        recetaService.nuevaRecetaUsuario(id,receta.getNombre(),receta.getIngredientes());
+    }
+
+    @PostMapping("/like/{id}")
+    @ResponseBody
+    public void darLike(@PathVariable(value = "id") Long idReceta, HttpSession session){
+        Receta receta = recetaService.findById(idReceta);
+        if (receta == null){
+            throw new RecetaNotFoundException();
+        }
+
+        Long id = managerUserSession.usuarioLogeado(session);
+        managerUserSession.comprobarUsuarioLogeado(session,id);
+
+        recetaService.darLike(idReceta);
+    }
+
+    @GetMapping("recetas/{id}/modificar")
+    public String modificarTarea(@PathVariable(value = "id") Long idReceta, HttpSession session , Model model,
+                                 @ModelAttribute RecetaData recetaData){
+        Receta receta = recetaService.findById(idReceta);
+        if (receta == null){
+            throw new RecetaNotFoundException();
+        }
+
+        managerUserSession.comprobarUsuarioLogeado(session, receta.getUsuario().getId());
+
+        model.addAttribute("receta" , receta);
+        recetaData.nombre = receta.getNombre();
+        recetaData.ingredientes = receta.getIngredientes();
+        return "formEditarReceta";
+    }
+
+    @PostMapping("recetas/{id}/modificar")
+    public String modificarTareaPost(@PathVariable(value = "id") Long idReceta,
+                                     HttpSession session ,
+                                     Model model,
+                                     @ModelAttribute RecetaData recetaData,
+                                     RedirectAttributes flash){
+
+        Receta receta = recetaService.findById(idReceta);
+        if (receta == null)
+        {
+            throw new RecetaNotFoundException();
+        }
+
+        Long idUsuario = receta.getUsuario().getId();
+
+        managerUserSession.comprobarUsuarioLogeado(session,idUsuario);
+
+        recetaService.modificarTarea(idReceta,recetaData.getNombre(),recetaData.ingredientes,receta.getCompartida(),receta.getFavorita());
+        flash.addFlashAttribute("mensaje" , "Receta modificada correctamente");
+
+        return "redirect:/usuarios/" + receta.getUsuario().getId() + "/recetas";
     }
 }

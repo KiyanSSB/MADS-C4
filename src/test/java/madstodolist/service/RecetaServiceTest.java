@@ -58,7 +58,54 @@ public class RecetaServiceTest {
         assertThat(compartida.getCompartida()).isTrue();
     }
 
+    @Test
+    @Transactional
+    public void testDarLike(){
+        Receta receta = recetaService.nuevaRecetaUsuario(1L, "test" , "test");
+        assertThat(receta.getLikes()).isEqualTo(0);
+        recetaService.darLike(receta.getId());
+        assertThat(receta.getLikes()).isEqualTo(1);
+    }
 
+    ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+    ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+    /////////////////////////////////////////////////    TDD   ////////////////////////////////////////////////////////////////
+    ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+    @Test
+    @Transactional
+    public void TDDModificarTarea(){
+        // GIVEN
+        // En el application.properties se cargan los datos de prueba del fichero datos-test.sql
+
+        Receta receta = recetaService.nuevaRecetaUsuario(1L, "prueba" , "prueba");
+        Long idNuevaTarea = receta.getId();
+
+        // WHEN
+
+        //Modificamos la receta colocando diferentes nombre, ingredientes y atributos de favorito, likes y compartido
+        Receta recetaModificada = recetaService.modificarTarea(idNuevaTarea, "modificado" , "modificado" , true ,  true);
+        Receta recetaBD = recetaService.findById(idNuevaTarea);
+
+        // THEN
+
+        //Nombre
+        assertThat(recetaModificada.getNombre()).isEqualTo("modificado");
+        assertThat(recetaBD.getNombre()).isEqualTo("modificado");
+
+        //Ingredientes
+        assertThat(recetaModificada.getIngredientes()).isEqualTo("modificado");
+        assertThat(recetaBD.getIngredientes()).isEqualTo("modificado");
+
+        //Favoritos
+        assertThat(recetaModificada.getCompartida()).isTrue();
+        assertThat(recetaBD.getCompartida()).isTrue();
+
+        //Compartidos
+        assertThat(recetaModificada.getFavorita()).isTrue();
+        assertThat(recetaBD.getFavorita()).isTrue();
+
+    }
 
 
 }

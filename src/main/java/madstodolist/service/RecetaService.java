@@ -94,4 +94,38 @@ public class RecetaService {
         receta.setCompartida(compartida);
         recetaRepository.save(receta);
     }
+
+    @Transactional
+    public void darLike(Long idReceta){
+        Receta receta = recetaRepository.findById(idReceta).orElse(null);
+        if (receta == null) {
+            throw new RecetaServiceException("Receta para añadir a compartidas no encontrada");
+        }
+
+        receta.sumarLike();
+        recetaRepository.save(receta);
+    }
+
+    ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+    ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+    /////////////////////////////////////////////////    TDD   ////////////////////////////////////////////////////////////////
+    ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+
+    @Transactional
+    public Receta modificarTarea(Long idReceta, String nombre , String ingredientes, Boolean compartido ,Boolean favorito){
+        Receta receta = recetaRepository.findById(idReceta).orElse(null);
+        if (receta== null){
+            throw new RecetaServiceException("Receta para añadir a compartidas no encontrada");
+        }
+
+        receta.setNombre(nombre);
+        receta.setIngredientes(ingredientes);
+        receta.setCompartida(compartido);
+        receta.setFavorita(favorito);
+
+        recetaRepository.save(receta);
+
+        return receta;
+    }
 }
