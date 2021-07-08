@@ -127,4 +127,20 @@ public class UsuarioServiceTest {
 
         assertThat(usuario.getAdmin()).isTrue();
     }
+
+    @Test
+    @Transactional
+    public void servicioBloquearUsuario(){
+        Usuario usuario = new Usuario("prueba@gmail.com");
+        usuario.setPassword("123456");
+        usuario.setAdmin(true);
+
+        //When
+        usuario = usuarioService.registrar(usuario);
+        usuarioService.bloquearUsuario(usuario.getId(),true);
+
+        //Then
+
+        assertThat(usuario.getBloqueado()).isTrue();
+    }
 }

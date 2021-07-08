@@ -54,8 +54,8 @@ public class UsuarioWebTest {
                 .thenReturn(UsuarioService.LoginStatus.USER_NOT_FOUND);
 
         this.mockMvc.perform(post("/login")
-                    .param("eMail","pepito.perez@gmail.com")
-                    .param("password","12345678"))
+                .param("eMail", "pepito.perez@gmail.com")
+                .param("password", "12345678"))
                 .andExpect(content().string(containsString("No existe usuario")));
     }
 
@@ -65,8 +65,8 @@ public class UsuarioWebTest {
                 .thenReturn(UsuarioService.LoginStatus.ERROR_PASSWORD);
 
         this.mockMvc.perform(post("/login")
-                    .param("eMail","ana.garcia@gmail.com")
-                    .param("password","000"))
+                .param("eMail", "ana.garcia@gmail.com")
+                .param("password", "000"))
                 .andExpect(content().string(containsString("Contraseña incorrecta")));
     }
 
@@ -76,12 +76,4 @@ public class UsuarioWebTest {
                 .flashAttr("error", "Contraseña incorrecta"))
                 .andExpect(content().string(containsString("Contraseña incorrecta")));
     }
-
-    @Test
-    public void servicioLoginRedirectUsuarioNotFound() throws Exception {
-        this.mockMvc.perform(get("/login")
-                .flashAttr("error", "No existe usuario"))
-                .andExpect(content().string(containsString("No existe usuario")));
-    }
-
 }
