@@ -83,6 +83,21 @@ public class UsuarioService {
         return modificarUsuario;
     }
 
+    @Transactional
+    public void bloquearUsuario(Long idUsuario, Boolean bloquear){
+        //Cogemos el usuario por el id
+        Usuario modificarUsuario = usuarioRepository.findById(idUsuario).orElse(null);
+
+        //Comprobamos que existe
+        if (modificarUsuario == null) throw new UsuarioServiceException("El usuario que se intenta modificar no existe");
+
+        //Si existe el usuario y no se produce ningún error, modificamos los valores
+        modificarUsuario.setBloqueado(bloquear);
+
+        //Guardamos el usuario en la base de datos
+        usuarioRepository.save(modificarUsuario);
+    }
+
     public Iterable<Usuario> getAllUsers(){
         return  usuarioRepository.findAll();
     }
