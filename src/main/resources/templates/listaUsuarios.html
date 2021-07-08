@@ -24,8 +24,9 @@
                 </thead>
                 <tbody>
                 <tr th:each="usuario: ${usuarios}">
-                    <td th:text="${usuario.nombre}">
-                    </td>
+                    <td th:text="${usuario.nombre}"></td>
+                    <td th:text="${usuario.getBloqueado()}"></td>
+
 
                     <td>
                         <a th:href="'buscar/' + ${usuario.id}">
@@ -33,6 +34,23 @@
                             >Visitar Perfil</button>
                         </a>
                     </td>
+
+                    <td th:if="${usuarioActual.getAdmin()} == true">
+                        <button class="btn btn-light btn-xs" onmouseover="" style="cursor: pointer;"
+                                th:if="${usuario.getBloqueado()} == false "
+                                th:onclick="'bloquear(\'/bloquear/' + ${usuario.getId()} + '\')'">
+                            Bloquear Usuario
+                        </button>
+                    </td>
+
+                    <td th:if="${usuarioActual.getAdmin()} == true">
+                        <button class="btn btn-light btn-xs" onmouseover="" style="cursor: pointer;"
+                                th:if="${usuario.getBloqueado()} == true "
+                                th:onclick="'bloquear(\'/bloquear/' + ${usuario.getId()} + '\')'">
+                            Desbloquear Usuario
+                        </button>
+                    </td>
+
 
 
 
@@ -47,6 +65,18 @@
 <div th:replace="fragments::javascript"/>
 
 </body>
+
+<!-- Lanzamos una petición DELETE por JavaScript para borrar una tarea -->
+<script type="text/javascript">
+    function bloquear(urlBorrar) {
+        console.log(urlBorrar)
+        if (confirm('¿Estás seguro/a de que quieres Bloquear al usuario?')) {
+            fetch(urlBorrar, {
+                method: 'POST'
+            }).then((res) => location.reload());
+        }
+    }
+</script>
 
 
 

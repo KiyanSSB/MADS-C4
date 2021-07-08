@@ -25,6 +25,7 @@ public class Usuario implements Serializable {
     @Temporal(TemporalType.DATE)
     private Date fechaNacimiento;
     private Boolean admin;
+    private Boolean bloqueado;
 
     // Definimos el tipo de fetch como EAGER para que
     // cualquier consulta que devuelve un usuario rellene automáticamente
@@ -51,6 +52,7 @@ public class Usuario implements Serializable {
     // Constructor público con los atributos obligatorios. En este caso el correo electrónico.
     public Usuario(String email) {
         this.email = email;
+        this.bloqueado = false;
     }
 
     public Long getId() {
@@ -118,6 +120,11 @@ public class Usuario implements Serializable {
     public Set<Grupo> getEquipos() {
         return grupos;
     }
+
+    //Bloqueado
+    public Boolean getBloqueado() { return  bloqueado;}
+    public void  setBloqueado(Boolean bloqueado){this.bloqueado = bloqueado;}
+
 
 
     @Override
