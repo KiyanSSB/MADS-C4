@@ -3,6 +3,7 @@ package madstodolist.service;
 import madstodolist.model.Grupo;
 import madstodolist.model.GrupoRepository;
 
+import madstodolist.model.Usuario;
 import madstodolist.model.UsuarioRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 
@@ -42,11 +43,23 @@ public class GrupoService {
 
     @Transactional(readOnly = true)
     public List<Grupo> findAll() {
-        List<Grupo> equipos = grupoRepository.findAll();
+        List<Grupo> grupos = grupoRepository.findAll();
 
-        return equipos;
+        return grupos;
+    }
+
+    @Transactional(readOnly = true)
+    public Grupo findById(Long id){
+        Grupo grupo = grupoRepository.findById(id).orElse(null);
+        return  grupo;
     }
 
 
+    @Transactional
+    public void añadirUsuarioGrupo(Long idGrupo,Usuario usuario){
+        Grupo grupo = grupoRepository.findById(idGrupo).orElse(null);
+        grupo.addUsuario(usuario);
+        grupoRepository.save(grupo);
+    }
 }
 

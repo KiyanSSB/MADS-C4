@@ -140,7 +140,6 @@ public class UsuarioServiceTest {
         usuarioService.bloquearUsuario(usuario.getId(),true);
 
         //Then
-
         assertThat(usuario.getBloqueado()).isTrue();
     }
 }
