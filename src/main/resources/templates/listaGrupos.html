@@ -17,8 +17,32 @@
                 <tbody>
                 <tr th:each="grupo: ${grupos}">
                     <td th:text="${grupo.nombre}"></td>
+
+
+                    <td>
+                        <a th:href="@{/grupo/{id}/(id=${grupo.id})}">
+                            <button class="btn btn-light btn-xs" onmouseover="" style="cursor: pointer;"
+                                    th:href="@{'/grupo/' + ${grupo.id} + '\')'}">
+                                Ver Grupo
+                            </button>
+                        </a>
+                    </td>
+
+
+                    <td th:if="${!grupo.getUsuarios().contains(usuario)}">
+                        <button class="btn btn-light btn-xs" onmouseover="" style="cursor: pointer;"
+                                th:onclick="'unir(\'/grupo/' + ${grupo.id} + '/unir' + '\')'">
+                            Unirme al grupo
+                        </button>
+                    </td>
+
+
+
+
                 </tr>
                 </tbody>
+
+
             </table>
         </div>
     </div>
@@ -30,4 +54,36 @@
 
 <div th:replace="fragments::javascript"/>
 </body>
+
+<!-- Lanzamos una petición DELETE por JavaScript para borrar una tarea -->
+<script type="text/javascript">
+    function unir(urlBorrar) {
+        console.log(urlBorrar)
+        if (confirm('¿Estás seguro/a de que quieres Unirte al grupo?')) {
+            fetch(urlBorrar, {
+                method: 'POST'
+            }).then((res) => location.reload());
+        }
+    }
+
+    function favorita(urlFavorita) {
+        console.log(urlFavorita)
+        if (confirm('¿Estás seguro que quieres añadir esta receta a favoritas?')) {
+            fetch(urlFavorita, {
+                method: 'POST'
+            }).then((res) => location.reload());
+        }
+    }
+
+    function compartida(urlCompartida) {
+        console.log(urlCompartida)
+        if (confirm('¿Estás seguro que quieres añadir esta receta a compartidas?')) {
+            fetch(urlCompartida, {
+                method: 'POST'
+            }).then((res) => location.reload());
+        }
+    }
+</script>
+
+
 </html>
