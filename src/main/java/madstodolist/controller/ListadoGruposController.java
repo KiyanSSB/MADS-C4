@@ -1,6 +1,8 @@
 package madstodolist.controller;
 
 
+
+
 import madstodolist.authentication.ManagerUserSession;
 import madstodolist.authentication.UsuarioNoLogeadoException;
 import madstodolist.model.Grupo;
@@ -12,6 +14,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 
 import javax.servlet.http.HttpSession;
@@ -72,6 +75,44 @@ public class ListadoGruposController {
         Grupo grupo = grupoService.crear(grupoData.nombre,id);
 
         return "redirect:/grupos";
+    }
+
+
+    @GetMapping("/grupo/{id}")
+    public String listadoDatosGrupo(Model model, HttpSession session,
+                                    @PathVariable("id") Long id,
+                                    @ModelAttribute GrupoData grupoData){
+
+        Long iduser = managerUserSession.usuarioLogeado(session);
+        Usuario usuario = usuarioService.findById(iduser);
+        model.addAttribute("usuario" , usuario);
+
+        if(managerUserSession.comprobarUsuarioLogeado(session, managerUserSession.usuarioLogeado(session))){
+
+        }else{
+            throw new UsuarioNoLogeadoException();
+        }
+
+        //Obtenemos la lista de equipos
+        Grupo grupo = grupoService.findById(id);
+
+        model.addAttribute("grupo", grupo);
+
+        return "listaGrupoDatos";
+    }
+
+    @PostMapping("/grupo/{id}/unir")
+    public String unirserGrupo(@PathVariable (value = "id") Long idGrupo,
+                               Model model, HttpSession session){
+
+        Long iduser = managerUserSession.usuarioLogeado(session);
+        Usuario usuario = usuarioService.findById(iduser);
+
+        Grupo grupo = grupoService.findById(idGrupo);
+
+
+        grupoService.añadirUsuarioGrupo(idGrupo,usuario);
+        return "";
     }
 
 }
